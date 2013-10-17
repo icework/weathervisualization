@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="../static/css/nv.d3.css" rel="stylesheet">
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../static/lib/underscore-min.js"></script>
+    <script type="text/javascript" src="../static/lib/backbone-min.js"></script>
+    <script type="text/javascript" src="../static/lib/d3.v3.js"></script>
+    <script type="text/javascript" src="../static/lib/nv.d3.js"></script>
+    <script type="text/javascript" src="../static/lib/tab.js"></script>
+    <script type="text/javascript" src="../static/test.js"></script>
+    <script type="text/javascript" src="../static/weather.js"></script>
+    <title>Weather the city</title>
+</head>
+<body>
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <select id="city1" class="form-control">
+    </select>
+  </div>
+  <div class="form-group">
+    <select id="city2" class="form-control">
+    </select>
+  </div>
+  <button id="cityNum" type="button" class="btn btn-primary btn-xs" id="downloadimage"><i id="smicon" class="glyphicon glyphicon-plus"></i></button>
+</form>
+<button id="draw" class="btn btn-default">Draw</button>
+<ul id="tab" class="nav nav-tabs">
+  <li><a href="#tmp" data-toggle="tab">Average Tmp</a></li>
+  <li><a href="#profile" data-toggle="tab">Precipation Days</a></li>
+  <li><a href="#messages" data-toggle="tab">Messages</a></li>
+  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane" id="tmp">
+    <div id="tavglinechart" class='with-3d-shadow with-transitions'>
+        <svg style="height: 500px; width:1200px"></svg>
+    </div>
+  </div>
+  <div class="tab-pane" id="profile">
+      <div id="precipbarchart" class='with-3d-shadow with-transitions'>
+        <svg style="height: 500px; width:1200px"></svg>
+        </div>
+  </div>
+  <div class="tab-pane" id="messages">3</div>
+  <div class="tab-pane" id="settings">4</div>
+</div>
+
+</body>
+</html>
