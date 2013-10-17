@@ -55,7 +55,7 @@ function drawPrecipBarChart(data) {
 }
 
 function drawChart(cityName){
-    var urlOfTavgCity = 'http://0.0.0.0:5000/weatherdata/'+cityName;
+    var urlOfTavgCity = '/weatherdata/'+cityName;
     $.getJSON(urlOfTavgCity, function(data){
         drawTavgLineChart(data[0]);
         drawPrecipBarChart(data[1]);
@@ -63,7 +63,7 @@ function drawChart(cityName){
 }
 
 function initializeSelection(){
-    var urlForCityList = 'http://0.0.0.0:5000/citylist'
+    var urlForCityList = '/citylist'
     $.getJSON(urlForCityList, function(data){
         data.sort();
         for(var i=0; i<data.length; i++){
