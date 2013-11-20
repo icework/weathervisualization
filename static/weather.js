@@ -54,11 +54,44 @@ function drawPrecipBarChart(data) {
     });
 }
 
+function drawSnowBarChart(data) {
+    nv.addGraph(function() {
+        chart = nv.models.multiBarChart()
+          .barColor(d3.scale.category20().range())
+          .margin({bottom: 100})
+          .transitionDuration(300)
+          .delay(0)
+          .groupSpacing(0.1);
+
+        chart.xAxis
+            .axisLabel("Month")
+            .showMaxMin(true)
+            .tickFormat(d3.format(',.0f'));
+
+        chart.yAxis
+            .axisLabel("Days")
+            .tickFormat(d3.format(',.0f'));
+
+        d3.select('#snowbarchart svg')
+            .datum(data)
+           .call(chart);
+
+        chart.multibar
+          .hideable(true);
+
+        chart.reduceXTicks(false).staggerLabels(true);
+        nv.utils.windowResize(chart.update);
+        chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+        return chart;
+    });
+}
+
 function drawChart(cityName){
     var urlOfTavgCity = '/weatherdata/'+cityName;
     $.getJSON(urlOfTavgCity, function(data){
         drawTavgLineChart(data[0]);
         drawPrecipBarChart(data[1]);
+        drawSnowBarChart(data[2]);
     })
 }
 

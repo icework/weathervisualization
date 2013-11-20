@@ -108,12 +108,38 @@ def getPrecip(cityList):
         result.append(cityObject)
     return result
 
+def getSnowFor(cityName):
+    rows = getDataFromDB(cityName, 'snow')
+    precipDayCountList = [0] * 12
+    for i in rows:
+        month = int(i[0][4:6])
+        if checkRational(i[1]) and i[1] != '0':
+            precipDayCountList[month - 1] += 1;
+    cityObject = {}
+    cityObject["key"] = cityName
+    barList = []
+    for i in range(1, 13):
+        monthObject = {}
+        monthObject['x'] = i
+        monthObject['y'] = precipDayCountList[i - 1]
+        barList.append(monthObject)
+    cityObject['values'] = barList
+    return cityObject
+
+def getSnow(cityList):
+    result = []
+    for cityName in cityList:
+        cityObject = getSnowFor(cityName)
+        result.append(cityObject)
+    return result
+
 @app.route("/weatherdata/<cityname>")
 def getData(cityname):
     cityNameList = cityname.split("PLUS")
     result = []
     result.append(getTmp(cityNameList))
     result.append(getPrecip(cityNameList))
+    result.append(getSnow(cityNameList))
     return json.dumps(result)
 
 if __name__ == "__main__":
