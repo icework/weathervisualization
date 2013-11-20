@@ -48,17 +48,16 @@ def getTmpFor(cityname):
     wban = str(rows[0][0])
     sql = 'SELECT weatherDate, Tavg FROM weather WHERE WBAN="' + wban + '"'
     cursor.execute(sql)
-    rows = cursor.fetchall()
+    rows = getDataFromDB(cityname, 'Tavg')
     lineObject = {}
     lineObject['key'] = cityname
     lineData = []
     formerTavg = 0
     count = 0
     for i in rows:
-        day = {}
-        day['x'] = count
+        day = {'x': count}
         tavg = formerTavg
-        if (i[1].isdigit()):
+        if i[1].isdigit():
             tavg = int(i[1])
         day['y'] = tavg
         lineData.append(day)
@@ -76,16 +75,15 @@ def getTmp(cityList):
         result.append(lineObject)
     return result
 
+def getDataFromDB(cityName, columnName):
+    cursor = mysql.get_db().cursor()
+    sql = 'select weatherDate, '+columnName+ ' from newCityList, weather where newCityList.WBAN = weather.WBAN and cityName = "' + cityName + '"'
+    cursor.execute(sql)
+    return cursor.fetchall()
+
 
 def getPrecipFor(cityname):
-    cursor = mysql.get_db().cursor()
-    sql = 'SELECT wban FROM cityMap WHERE cityName="' + cityname + '"'
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    wban = str(rows[0][0])
-    sql = 'SELECT weatherDate, precip FROM weather WHERE WBAN="' + wban + '"'
-    cursor.execute(sql)
-    rows = cursor.fetchall()
+    rows = getDataFromDB(cityname, 'precip')
     precipDayCountList = [0] * 12
     for i in rows:
         month = int(i[0][4:6])
